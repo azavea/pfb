@@ -11,9 +11,8 @@ INSERT INTO generated.neighborhood_reachable_roads_low_stress (
 SELECT  r1.road_id,
         v2.road_id,
         sheds.agg_cost
-FROM    neighborhood_ways r1,
-        neighborhood_ways_net_vert v1,
-        neighborhood_ways_net_vert v2,
+FROM    neighborhood_ways r1
+        INNER JOIN neighborhood_ways_net_vert v1 ON (r1.road_id = v1.road_id),
         pgr_drivingDistance('
             SELECT  link_id AS id,
                     source_vert AS source,
@@ -25,12 +24,11 @@ FROM    neighborhood_ways r1,
             10560,
             directed := true
         ) sheds
+        INNER JOIN neighborhood_ways_net_vert v2 ON (v2.vert_id = sheds.node)
 WHERE r1.road_id % :thread_num = :thread_no
 AND
 EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(b.geom,r1.geom)
-)
-AND     r1.road_id = v1.road_id
-AND     v2.vert_id = sheds.node;
+            WHERE   ST_Intersects(b.geom, r1.geom)
+);

@@ -76,9 +76,12 @@ ALTER TABLE neighborhood_ways ADD COLUMN tf_int_stress INT;
 -- indexes
 CREATE INDEX idx_neighborhood_ways_osm ON neighborhood_ways (osm_id);
 CREATE INDEX idx_neighborhood_ways_ints_osm ON neighborhood_ways_intersections (osm_id);
+CREATE INDEX idx_neighborhood_ways_geom ON neighborhood_ways USING GIST (geom);
+CREATE INDEX idx_neighborhood_boundary_geom ON neighborhood_boundary USING GIST (geom);
 CREATE INDEX idx_neighborhood_fullways ON neighborhood_osm_full_line (osm_id);
 CREATE INDEX idx_neighborhood_fullpoints ON neighborhood_osm_full_point (osm_id);
-ANALYZE neighborhood_ways (osm_id,geom);
+ANALYZE neighborhood_ways (osm_id, geom);
+ANALYZE neighborhood_boundary (geom);
 ANALYZE neighborhood_cycwys_ways (the_geom);
 ANALYZE neighborhood_ways_intersections (osm_id);
 ANALYZE neighborhood_osm_full_line (osm_id);
