@@ -73,6 +73,11 @@ ALTER TABLE neighborhood_ways ADD COLUMN ft_int_stress INT;
 ALTER TABLE neighborhood_ways ADD COLUMN tf_seg_stress INT;
 ALTER TABLE neighborhood_ways ADD COLUMN tf_int_stress INT;
 
+-- buffer neighborhood boundary to max travelshed distance
+SELECT ST_Buffer(b.geom, 10560) AS geom INTO neighborhood_boundary_buffered FROM neighborhood_boundary b;
+CREATE INDEX idx_neighborhood_boundary_buffered_geom ON neighborhood_boundary_buffered USING GIST (geom);
+ANALYZE neighborhood_boundary_buffered (geom);
+
 -- indexes
 CREATE INDEX idx_neighborhood_ways_osm ON neighborhood_ways (osm_id);
 CREATE INDEX idx_neighborhood_ways_ints_osm ON neighborhood_ways_intersections (osm_id);

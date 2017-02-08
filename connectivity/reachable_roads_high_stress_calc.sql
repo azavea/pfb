@@ -14,11 +14,13 @@ SELECT  r1.road_id,
 FROM    neighborhood_ways r1
         INNER JOIN neighborhood_ways_net_vert v1 ON (r1.road_id = v1.road_id),
         pgr_drivingDistance('
-            SELECT  link_id AS id,
-                    source_vert AS source,
-                    target_vert AS target,
-                    link_cost AS cost
-            FROM    neighborhood_ways_net_link',
+            SELECT     nl.link_id AS id,
+                       nl.source_vert AS source,
+                       nl.target_vert AS target,
+                       nl.link_cost AS cost
+            FROM       neighborhood_ways_net_link AS nl
+            INNER JOIN neighborhood_boundary_buffered AS nb
+            ON         ST_Intersects(nl.geom, nb.geom)',
             v1.vert_id,
             10560,
             directed := true
