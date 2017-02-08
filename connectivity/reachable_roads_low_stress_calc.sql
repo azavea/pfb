@@ -19,7 +19,7 @@ FROM    neighborhood_ways r1
                        nl.target_vert AS target,
                        nl.link_cost AS cost
             FROM       neighborhood_ways_net_link AS nl
-            INNER JOIN neighborhood_boundary_buffered AS nb
+            INNER JOIN neighborhood_boundary AS nb
             ON         ST_Intersects(nl.geom, nb.geom)
             WHERE      link_stress = 1',
             v1.vert_id,
