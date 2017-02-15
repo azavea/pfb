@@ -1,3 +1,11 @@
+# DEPRECATED
+
+This was pulled into [azavea/pfb-network-connectivity](https://github.com/azavea/pfb-network-connectivity) at [8561f90ba](https://github.com/azavea/pfb-network-connectivity/commit/8561f90ba4019f5fac49c297155a85742cfdd974).
+
+Further work should be done over there.
+
+---
+
 # pfb
 
 ## Docker
