@@ -25,6 +25,8 @@ psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_D
   -v nb_output_srid="${NB_OUTPUT_SRID}" \
   -f connectivity/census_block_roads.sql
 
+/usr/bin/time -v psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" -f connectivity/reachable_roads_prep.sql
+
 /usr/bin/time -v psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" -f connectivity/reachable_roads_high_stress_prep.sql
 
 /usr/bin/time -v parallel<<EOF
